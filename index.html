@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SleepSync - Log your sleep, uncover patterns, and boost your rest with our intuitive tracking app">
+    <meta name="theme-color" content="#4A5FD9">
+    <title>SleepSync - Smart Sleep Tracking</title>
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">
+                    <span class="logo-icon">🌙</span>
+                    SleepSync
+                </h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-view="dashboard" aria-label="Dashboard">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Dashboard</span>
+                    </button>
+                    <button class="nav-btn" data-view="log" aria-label="Log Sleep">
+                        <span class="nav-icon">➕</span>
+                        <span class="nav-label">Log Sleep</span>
+                    </button>
+                    <button class="nav-btn" data-view="insights" aria-label="Insights">
+                        <span class="nav-icon">💡</span>
+                        <span class="nav-label">Insights</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            
+            <!-- Dashboard View -->
+            <section id="dashboard" class="view active">
+                <div class="welcome-section">
+                    <h2 class="section-title">Welcome back! 👋</h2>
+                    <p class="section-subtitle">Here's your sleep overview</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">😴</div>
+                        <div class="stat-content">
+                            <p class="stat-label">Average Sleep</p>
+                            <p class="stat-value" id="avgSleep">7.5h</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <p class="stat-label">Sleep Quality</p>
+                            <p class="stat-value" id="avgQuality">8.2/10</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-content">
+                            <p class="stat-label">Current Streak</p>
+                            <p class="stat-value" id="streak">7 days</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-content">
+                            <p class="stat-label">Total Logs</p>
+                            <p class="stat-value" id="totalLogs">42</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Section -->
+                <div class="chart-section">
+                    <h3 class="chart-title">Last 7 Days</h3>
+                    <div class="chart-container">
+                        <canvas id="sleepChart" role="img" aria-label="Sleep duration chart for the last 7 days"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Logs -->
+                <div class="recent-logs">
+                    <h3 class="section-heading">Recent Sleep Logs</h3>
+                    <div id="recentLogsList" class="logs-list">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Log Sleep View -->
+            <section id="log" class="view">
+                <div class="form-section">
+                    <h2 class="section-title">Log Your Sleep 😴</h2>
+                    <p class="section-subtitle">Track your sleep duration and quality</p>
+
+                    <form id="sleepForm" class="sleep-form" novalidate>
+                        <div class="form-group">
+                            <label for="sleepDate" class="form-label">Date</label>
+                            <input 
+                                type="date" 
+                                id="sleepDate" 
+                                name="sleepDate" 
+                                class="form-input" 
+                                required
+                                aria-required="true">
+                            <span class="form-error" id="dateError"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bedtime" class="form-label">Bedtime</label>
+                                <input 
+                                    type="time" 
+                                    id="bedtime" 
+                                    name="bedtime" 
+                                    class="form-input" 
+                                    required
+                                    aria-required="true">
+                                <span class="form-error" id="bedtimeError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="waketime" class="form-label">Wake Time</label>
+                                <input 
+                                    type="time" 
+                                    id="waketime" 
+                                    name="waketime" 
+                                    class="form-input" 
+                                    required
+                                    aria-required="true">
+                                <span class="form-error" id="waketimeError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quality" class="form-label">
+                                Sleep Quality: <span id="qualityValue">5</span>/10
+                            </label>
+                            <input 
+                                type="range" 
+                                id="quality" 
+                                name="quality" 
+                                min="1" 
+                                max="10" 
+                                value="5" 
+                                class="form-range"
+                                aria-valuemin="1"
+                                aria-valuemax="10"
+                                aria-valuenow="5">
+                            <div class="range-labels">
+                                <span>Poor</span>
+                                <span>Excellent</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mood" class="form-label">Mood on Waking</label>
+                            <select id="mood" name="mood" class="form-select">
+                                <option value="energized">😄 Energized</option>
+                                <option value="refreshed">😊 Refreshed</option>
+                                <option value="neutral" selected>😐 Neutral</option>
+                                <option value="tired">😴 Tired</option>
+                                <option value="exhausted">😫 Exhausted</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Factors Affecting Sleep</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="factors" value="caffeine">
+                                    <span>☕ Caffeine</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="factors" value="exercise">
+                                    <span>🏃 Exercise</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="factors" value="stress">
+                                    <span>😰 Stress</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="factors" value="alcohol">
+                                    <span>🍷 Alcohol</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="factors" value="screen">
+                                    <span>📱 Screen Time</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes" class="form-label">Notes (Optional)</label>
+                            <textarea 
+                                id="notes" 
+                                name="notes" 
+                                class="form-textarea" 
+                                rows="3" 
+                                placeholder="Any additional observations..."
+                                maxlength="500"></textarea>
+                            <span class="char-count"><span id="charCount">0</span>/500</span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-icon">✓</span>
+                            Save Sleep Log
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Insights View -->
+            <section id="insights" class="view">
+                <div class="insights-section">
+                    <h2 class="section-title">Sleep Insights 💡</h2>
+                    <p class="section-subtitle">Discover patterns and improve your sleep</p>
+
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <h3 class="insight-title">Best Sleep Day</h3>
+                            <p class="insight-value" id="bestDay">Saturday</p>
+                            <p class="insight-detail" id="bestDayDetail">Avg: 8.5 hours</p>
+                        </div>
+
+                        <div class="insight-card">
+                            <h3 class="insight-title">Optimal Bedtime</h3>
+                            <p class="insight-value" id="optimalBedtime">10:30 PM</p>
+                            <p class="insight-detail">Based on your best sleep quality</p>
+                        </div>
+
+                        <div class="insight-card">
+                            <h3 class="insight-title">Top Factor</h3>
+                            <p class="insight-value" id="topFactor">Exercise</p>
+                            <p class="insight-detail">Most correlated with good sleep</p>
+                        </div>
+
+                        <div class="insight-card">
+                            <h3 class="insight-title">Weekly Trend</h3>
+                            <p class="insight-value trend-up" id="weeklyTrend">↗ Improving</p>
+                            <p class="insight-detail">+30 min avg this week</p>
+                        </div>
+                    </div>
+
+                    <!-- Tips Section -->
+                    <div class="tips-section">
+                        <h3 class="section-heading">Personalized Tips</h3>
+                        <div class="tips-list" id="tipsList">
+                            <div class="tip-card">
+                                <span class="tip-icon">💪</span>
+                                <div class="tip-content">
+                                    <h4 class="tip-title">Keep up the exercise!</h4>
+                                    <p class="tip-text">Your data shows 45% better sleep quality on days you exercise.</p>
+                                </div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-icon">☕</span>
+                                <div class="tip-content">
+                                    <h4 class="tip-title">Watch your caffeine</h4>
+                                    <p class="tip-text">Avoid caffeine after 2 PM for better sleep quality.</p>
+                                </div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-icon">🎯</span>
+                                <div class="tip-content">
+                                    <h4 class="tip-title">Consistency is key</h4>
+                                    <p class="tip-text">Try to maintain regular sleep and wake times, even on weekends.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SleepSync. Track better, sleep better. 🌙</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>
