@@ -679,9 +679,70 @@ function init() {
     // Update dashboard
     updateDashboard();
     
+    // Initialize n8n chatbot
+    initializeChatbot();
+    
     // Log initialization
     console.log('🌙 SleepSync initialized successfully!');
     console.log(`📊 Loaded ${AppState.sleepLogs.length} sleep logs`);
+    console.log('💬 Poly Sleep Coach chatbot ready!');
+}
+
+// ===================================
+// n8n Chatbot Initialization
+// ===================================
+
+function initializeChatbot() {
+    // Wait for n8n chat library to load
+    if (typeof window.n8nChat === 'undefined') {
+        console.log('⏳ Waiting for n8n chat library...');
+        setTimeout(initializeChatbot, 500);
+        return;
+    }
+    
+    try {
+        window.n8nChat.createChat({
+            webhookUrl: 'https://n8ngc.codeblazar.org/workflow/O7KySpKDsriQw4Hq_6UKg',
+            target: '#n8n-chat',
+            mode: 'window',
+            chatInputKey: 'chatInput',
+            chatSessionKey: 'sessionId',
+            metadata: {},
+            showWelcomeScreen: true,
+            defaultLanguage: 'en',
+            initialMessages: [
+                'Hey there! 😴 I\'m your Poly Sleep Coach. How can I help with your sleep today?'
+            ],
+            i18n: {
+                en: {
+                    title: 'Poly Sleep Coach',
+                    subtitle: 'Your AI Sleep Assistant',
+                    footer: '',
+                    getStarted: 'Start Chat',
+                    inputPlaceholder: 'Type your sleep question...'
+                }
+            },
+            theme: {
+                primaryColor: '#4A5FD9',
+                textColor: '#2C3E50',
+                headerBackground: 'linear-gradient(135deg, #4A5FD9 0%, #3848A6 100%)',
+                headerTextColor: '#FFFFFF',
+                chatWindowBackground: '#F8F9FE',
+                messageBackground: '#FFFFFF',
+                userMessageBackground: '#4A5FD9',
+                userMessageTextColor: '#FFFFFF',
+                botMessageBackground: '#FFFFFF',
+                botMessageTextColor: '#2C3E50',
+                buttonFontSize: '16px',
+                chatWindowBorderRadius: '16px',
+                messageBorderRadius: '12px'
+            }
+        });
+        
+        console.log('✅ Poly Sleep Coach initialized successfully!');
+    } catch (error) {
+        console.error('❌ Failed to initialize chatbot:', error);
+    }
 }
 
 // Start the application when DOM is ready
