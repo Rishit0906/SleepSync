@@ -350,6 +350,22 @@ p {
     transition: all var(--transition-base);
 }
 
+.log-item.new-log {
+    animation: highlightNew 1s ease-in-out;
+    border-left-color: var(--color-success);
+}
+
+@keyframes highlightNew {
+    0% {
+        background: var(--color-success);
+        transform: scale(1.02);
+    }
+    100% {
+        background: var(--color-background);
+        transform: scale(1);
+    }
+}
+
 .log-item:hover {
     transform: translateX(4px);
     box-shadow: var(--shadow-md);

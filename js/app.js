@@ -352,8 +352,11 @@ function updateRecentLogs() {
         return;
     }
     
-    container.innerHTML = recentLogs.map(log => `
-        <div class="log-item">
+    // Store current first log ID to detect new entries
+    const currentFirstLogId = container.firstElementChild?.dataset?.logId;
+    
+    container.innerHTML = recentLogs.map((log, index) => `
+        <div class="log-item${index === 0 && log.id !== currentFirstLogId ? ' new-log' : ''}" data-log-id="${log.id}">
             <div class="log-header">
                 <span class="log-date">${formatDate(log.date)}</span>
                 <span class="log-quality">
@@ -373,6 +376,14 @@ function updateRecentLogs() {
             </div>
         </div>
     `).join('');
+    
+    // Trigger animation for new log
+    setTimeout(() => {
+        const newLog = container.querySelector('.new-log');
+        if (newLog) {
+            newLog.classList.remove('new-log');
+        }
+    }, 1000);
 }
 
 function getMoodEmoji(mood) {
@@ -480,19 +491,22 @@ function handleFormSubmit(e) {
     AppState.sleepLogs.push(sleepLog);
     saveToLocalStorage();
     
-    // Show success message
-    showToast('Sleep log saved successfully! 🎉', 'success');
-    
     // Reset form
     e.target.reset();
     document.getElementById('sleepDate').value = new Date().toISOString().split('T')[0];
     document.getElementById('qualityValue').textContent = '5';
     document.getElementById('charCount').textContent = '0';
     
-    // Update dashboard
-    updateDashboard();
+    // Update dashboard immediately (even if we're on the log view)
+    // This ensures the data is fresh when we switch views
+    updateStats();
+    updateChart();
+    updateRecentLogs();
     
-    // Optionally switch to dashboard
+    // Show success message
+    showToast('Sleep log saved successfully! 🎉', 'success');
+    
+    // Switch to dashboard to show the updated logs
     setTimeout(() => {
         switchView('dashboard');
     }, 1500);
