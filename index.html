@@ -17,10 +17,6 @@
     <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
     
-    <!-- n8n Chat Widget -->
-    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/style.css" rel="stylesheet" />
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@n8n/chat/chat.bundle.js"></script>
-    
     <!-- Stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -309,10 +305,34 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast" role="alert" aria-live="polite"></div>
 
-    <!-- n8n Chat Container -->
-    <div id="n8n-chat"></div>
-
     <!-- JavaScript -->
     <script src="js/app.js"></script>
+    
+    <!-- n8n Chat Widget -->
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/style.css" rel="stylesheet" />
+    <script type="module">
+      import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/chat.bundle.es.js';
+      
+      createChat({
+        webhookUrl: 'https://n8ngc.codeblazar.org/webhook/O7KySpKDsriQw4Hq_6UKg',
+        mode: 'window',
+        chatInputKey: 'chatInput',
+        chatSessionKey: 'sessionId',
+        showWelcomeScreen: true,
+        defaultLanguage: 'en',
+        initialMessages: [
+          "Hey there! 😴 I'm your Poly Sleep Coach. How can I help with your sleep today?"
+        ],
+        i18n: {
+          en: {
+            title: 'Poly Sleep Coach',
+            subtitle: 'Your AI Sleep Assistant',
+            footer: '',
+            getStarted: 'Start Chat',
+            inputPlaceholder: 'Type your sleep question...'
+          }
+        }
+      });
+    </script>
 </body>
 </html>
