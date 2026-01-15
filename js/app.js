@@ -1,5 +1,5 @@
 // ===================================
-// SleepSync - Sleep Tracking App
+// WellUp sleep tracker - Sleep Tracking App
 // Main JavaScript Application
 // ===================================
 

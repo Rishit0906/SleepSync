@@ -1,10 +1,10 @@
-# 🌙 SleepSync - Sleep Tracking App
+# 🌙 WellUp sleep tracker - Sleep Tracking App
 
 **One-Line Pitch:** Log your sleep, uncover patterns, and boost your rest with our intuitive tracking app!
 
 ## 📋 Overview
 
-SleepSync empowers users to monitor sleep duration, quality, and factors like mood or caffeine intake. Using charts and insights, it helps develop better sleep habits for improved health and productivity.
+WellUp sleep tracker empowers users to monitor sleep duration, quality, and factors like mood or caffeine intake. Using charts and insights, it helps develop better sleep habits for improved health and productivity.
 
 ## ✨ Features
 
@@ -44,7 +44,7 @@ SleepSync empowers users to monitor sleep duration, quality, and factors like mo
 
 ### File Structure
 ```
-SleepSync/
+WellUp-sleep-tracker/
 ├── index.html          # Main HTML file
 ├── css/
 │   └── styles.css     # All styles and design system
