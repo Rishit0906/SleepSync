@@ -8,13 +8,13 @@
    =================================== */
 :root {
     /* Primary Colors */
-    --color-primary: #4A5FD9;
-    --color-primary-light: #8B9FE8;
-    --color-primary-dark: #3848A6;
+    --color-primary: #2ECC71;
+    --color-primary-light: #58D68D;
+    --color-primary-dark: #27AE60;
     
     /* Accent Colors */
-    --color-accent: #FFB86C;
-    --color-accent-light: #FFD099;
+    --color-accent: #52C785;
+    --color-accent-light: #7FD9A3;
     
     /* Status Colors */
     --color-success: #6BCF7F;
@@ -23,16 +23,16 @@
     --color-info: #4CC9F0;
     
     /* Neutral Colors */
-    --color-background: #F8F9FE;
+    --color-background: #F9FFFB;
     --color-surface: #FFFFFF;
-    --color-dark: #2C3E50;
-    --color-muted: #B8C5D6;
-    --color-border: #E1E7F0;
+    --color-dark: #1E4D2B;
+    --color-muted: #A8D5BA;
+    --color-border: #D5F5E3;
     
     /* Text Colors */
-    --color-text-primary: #2C3E50;
-    --color-text-secondary: #64748B;
-    --color-text-muted: #94A3B8;
+    --color-text-primary: #1E4D2B;
+    --color-text-secondary: #27AE60;
+    --color-text-muted: #7FB89E;
     
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -54,9 +54,9 @@
     
     /* Shadows */
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px rgba(74, 95, 217, 0.1);
-    --shadow-lg: 0 10px 20px rgba(74, 95, 217, 0.15);
-    --shadow-xl: 0 20px 40px rgba(74, 95, 217, 0.2);
+    --shadow-md: 0 4px 6px rgba(46, 204, 113, 0.1);
+    --shadow-lg: 0 10px 20px rgba(46, 204, 113, 0.15);
+    --shadow-xl: 0 20px 40px rgba(46, 204, 113, 0.2);
     
     /* Border Radius */
     --radius-sm: 0.375rem;
@@ -461,7 +461,7 @@ p {
 .form-textarea:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(74, 95, 217, 0.1);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
 }
 
 .form-input.error,
@@ -929,10 +929,10 @@ button[aria-label*="Open"]:hover {
 /* Add pulse animation to chat button */
 @keyframes chatPulse {
     0%, 100% {
-        box-shadow: 0 0 0 0 rgba(74, 95, 217, 0.7);
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
     }
     50% {
-        box-shadow: 0 0 0 10px rgba(74, 95, 217, 0);
+        box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
     }
 }
 
